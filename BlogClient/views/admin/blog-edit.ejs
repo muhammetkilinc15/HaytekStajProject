@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include("../partials/head")  %> 
+</head>
+<body>
+    
+    <%- include("../partials/nav")  %> 
+
+    <div class="container mt-3">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row my-5 gx-5">
+                <div class="col-md-10">
+                    <input type="hidden" name="id" value="<%= blog.id %>">
+                    <input type="hidden" name="image" value="<%= blog.image %>">
+                    
+                    <!-- Title Field -->
+                    <div class="row mb-3">
+                        <label for="title" class="col-sm-1 col-form-label">Title</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="title" name="title" value="<%= blog.title %>">
+                        </div>
+                    </div>
+    
+                    <!-- Subtitle Field -->
+                    <div class="row mb-3">
+                        <label for="subtitle" class="col-sm-1 col-form-label">Subtitle</label>
+                        <div class="col-sm-11">
+                            <textarea name="subtitle" class="form-control" rows="5"><%= blog.subtitle %></textarea>
+                        </div>
+                    </div>
+    
+                    <!-- URL Field -->
+                    <div class="row mb-3">
+                        <label for="url" class="col-sm-1 col-form-label">URL</label>
+                        <div class="col-sm-11">
+                            <input type="text" class="form-control" id="url" name="url" value="<%= blog.url %>">
+                        </div>
+                    </div>
+    
+                    <!-- Content Field -->
+                    <div class="row mb-3">
+                        <label for="content" class="col-sm-1 col-form-label">Content</label>
+                        <div class="col-sm-11">
+                            <textarea id="editor" name="content" class="form-control" rows="10"><%= blog.content %></textarea>
+                        </div>
+                    </div>
+    
+                    <!-- Image Field -->
+                    <div class="row mb-3">
+                        <label for="image" class="col-sm-1 col-form-label">Image</label>
+                        <div class="col-sm-11">
+                            <img src="<%= blog.imageUrl %> " alt="" width="120">
+                            <input type="file" class="form-control" id="image" name="image">
+                        </div>
+                    </div>
+    
+                    <!-- Save Button -->
+                    <div class="row mb-3">
+                        <div class="col-sm-11 offset-sm-1">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Sidebar Fields -->
+                <div class="col-md-2">
+                    <!-- Main Page Checkbox -->
+                    <div class="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="mainPage" name="mainPage" <%= blog.mainPage ? "checked" : "" %> />
+                            <label class="form-check-label" for="mainPage">Main Page</label>
+                        </div>
+                    </div>
+    
+                    <!-- Approval Checkbox -->
+                    <div class="row mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="isApproved" name="isApproved" <%= blog.isApproved ? "checked" : "" %> />
+                            <label class="form-check-label" for="isApproved">Approved</label>
+                        </div>
+                    </div>
+    
+                    <!-- Categories List -->
+                    <div class="row border-top pt-3">
+                        <% categories.forEach(category => { %>
+                            <div class="form-check">
+                                <input class="form-check-input" 
+                                    type="checkbox" 
+                                    id="category_<%= category.id %>" 
+                                    name="categories[]" 
+                                    value="<%= category.id %>" 
+                                    <%= blog.categories.some(cat => cat.id == category.id) ? "checked" : "" %> />  
+                                <label class="form-check-label" for="category_<%= category.id %>">
+                                    <%= category.name %>
+                                </label>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    
+    <!-- CKEditor Script -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/35.0.1/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+</body>
+</html>
+
+
+

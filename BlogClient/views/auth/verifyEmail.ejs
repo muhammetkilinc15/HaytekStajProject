@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Font Awesome for icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <%- include("../partials/head")  %> 
+    <style>
+        body {
+            background-color: #f8f9fa; /* Sayfanın arka plan rengi */
+        }
+        .form-container {
+            max-width: 400px; /* Form genişliği */
+            margin: auto; /* Ortala */
+            padding: 30px; /* İç boşluk */
+            background-color: #ffffff; /* Form arka plan rengi */
+            border-radius: 12px; /* Kenar yuvarlama */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Gölgelendirme */
+            transition: box-shadow 0.3s ease; /* Gölgeleme geçişi */
+        }
+        .form-container:hover {
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2); /* Hover efekti */
+        }
+        .input-group-text {
+            background-color: #e9ecef; /* Giriş alanı arka plan rengi */
+            border: 1px solid #ced4da; /* Giriş alanı kenar rengi */
+        }
+    </style>
+</head>
+<body>   
+    <%- include("../partials/nav")  %> 
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                
+                <% if (typeof message !== "undefined") { %>
+                    <div class="alert alert-<%= message.class %>">
+                        <%= message.text %>
+                    </div>
+                <% } %>
+
+                <div class="form-container">
+                    <div class="text-center mb-4">
+                        <h4><i class="fas fa-envelope"></i> E-posta Doğrulama</h4>
+                        <p class="text-muted">Lütfen e-posta adresinize gönderilen doğrulama kodunu girin.</p>
+                    </div>
+
+                    <form method="post" action="/account/verify-email">
+                        <!-- Verification code field with icon -->
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2">
+                                <i class="fas fa-key"></i>
+                            </span>
+                            <input type="text" class="form-control" id="verificationCode" name="verificationCode" placeholder="Doğrulama Kodu" aria-label="Doğrulama Kodu" aria-describedby="basic-addon2" required>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success">Doğrula</button>
+                        </div>
+
+                        <div class="text-center mt-3">
+                            <a href="/account/resend-verification" class="btn btn-link">Doğrulama kodunu tekrar gönder</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
